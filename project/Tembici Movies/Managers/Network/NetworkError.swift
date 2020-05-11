@@ -17,7 +17,7 @@ enum NetworkError: Error {
     // Data errors
     case emptyResponse
     case emptyData
-    case decoderFailed
+    case decoderFailed(message: String)
 
     // Default errors
     case sessionUnavailble

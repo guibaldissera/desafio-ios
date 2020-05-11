@@ -13,7 +13,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.systemYellow
-        NetworkManager().request(endpoint: MovieEndpoint.getPopularMovies(page: 1)) { result in
+        NetworkManager().request(
+            endpoint: MovieEndpoint.getPopularMovies(page: 1),
+            withDecodeType: MovieList.self) { result in
             print(result)
         }
     }

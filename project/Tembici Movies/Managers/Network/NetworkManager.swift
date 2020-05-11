@@ -11,7 +11,8 @@ import Foundation
 class NetworkManager {
 
     // MARK: - TypeAlias
-    typealias RequestResult<T> = (Result<T, NetworkError>) -> Void
+    typealias NetworkDefaultResult<T> = Result<T, NetworkError>
+    typealias RequestResult<T> = (NetworkDefaultResult<T>) -> Void
 
     // MARK: - Properties
     private var session: URLSession
@@ -50,6 +51,8 @@ class NetworkManager {
         task.resume()
     }
 
+    // MARK: - Private Methods
+
     /// Method to handle response of session task
     /// - Parameters:
     ///   - data: data received
@@ -57,6 +60,7 @@ class NetworkManager {
     ///   - error: error received if exist
     ///   - completion: completion to resolve when task handled
     private func handleTask<T>(data: Data?, response: URLResponse?, error: Error?, completion: @escaping RequestResult<T>) where T: Decodable {
+
         // Received an error unexpected
         guard error == nil else {
             completion(.failure(.unexpected))
@@ -68,25 +72,59 @@ class NetworkManager {
             return
         }
 
+        // Get completion result based on status code
+        let completionResult: NetworkDefaultResult<T>
+
+        // Validate response
         switch response.statusCode {
         case 200...299:
             if let data = data {
-                if let model = try? JSONDecoder().decode(T.self, from: data) {
-                    completion(.success(model))
-                } else {
-                    completion(.failure(.decoderFailed))
-                }
+                completionResult = self.decodeData(data)
             } else {
-                completion(.failure(.emptyData))
+                completionResult = .failure(.emptyData)
             }
         case 401:
-            completion(.failure(.apiUnauthorized))
+            completionResult = .failure(.apiUnauthorized)
         case 404:
-            completion(.failure(.apiPathNotFound))
+            completionResult = .failure(.apiPathNotFound)
         case 500:
-            completion(.failure(.apiError))
+            completionResult = .failure(.apiError)
         default:
-            completion(.failure(.unexpected))
+            completionResult = .failure(.unexpected)
         }
+
+        // Send result
+        completion(completionResult)
+    }
+
+    /// Method to decode data trwoing the error
+    /// - Parameter data: data to decode
+    private func decodeData<T>(_ data: Data) -> NetworkDefaultResult<T> where T: Decodable {
+
+        // Variable to auxiliar completion
+        let decodeResult: NetworkDefaultResult<T>
+
+        // Try to decode model
+        do {
+            let model = try JSONDecoder().decode(T.self, from: data)
+            decodeResult = .success(model)
+
+        // Throw specific decoding error
+        } catch let decodeError as DecodingError {
+            switch decodeError {
+            case let .keyNotFound(codingKey, _):
+                let message = "Key not Found: \(codingKey.stringValue)"
+                decodeResult = .failure(.decoderFailed(message: message))
+            default:
+                let message = decodeError.localizedDescription
+                decodeResult = .failure(.decoderFailed(message: message))
+            }
+
+        // Throw any other error
+        } catch let otherError {
+            let message = otherError.localizedDescription
+            decodeResult = .failure(.decoderFailed(message: message))
+        }
+        return decodeResult
     }
 }
