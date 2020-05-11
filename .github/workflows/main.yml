@@ -4,6 +4,10 @@ on:
   push:
     branches: [ master ]
 
+defaults:
+  run:
+    working-directory: project
+
 jobs:
   test:
     name: Test
@@ -12,10 +16,23 @@ jobs:
         matrix:
           destination: ['platform=iOS Simulator,OS=latest,name=iPhone 11']
     steps:
-      - uses: actions/checkout@master
-      - name: Test with ${{ matrix.destination }}
-        run: |
-          cd project
-          xcodebuild clean test -project "${project}.xcodeproj" -scheme "${project}" -destination "${{ matrix.destination }}" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
+      - id: testCheckout
+        uses: actions/checkout@master
+      - id: testStep
+        name: Test with ${{ matrix.destination }}
+        run: xcodebuild clean test -project "${PROJECT}.xcodeproj" -scheme "${PROJECT}" -destination "${{ matrix.destination }}" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
         env:
-          project: "Tembici Movies"
+          PROJECT: "Tembici Movies"
+
+  build:
+    name: Build Project
+    runs-on: macos-latest
+    needs: [test]
+    steps:
+      - id: buildCheckout
+        uses: actions/checkout@master
+      - id: buildStep
+        name: Build
+        run: xcodebuild clean build -project "${PROJECT}.xcodeproj" -scheme "${PROJECT}" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO CODE_SIGNING_ALLOWED=NO 
+        env:
+          PROJECT: "Tembici Movies"
