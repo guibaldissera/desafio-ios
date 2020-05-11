@@ -47,6 +47,10 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>ServerURL</key>
+	<string>$(SERVER_URL)</string>
+	<key>ServerToken</key>
+	<string>$(TOKEN_API)</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

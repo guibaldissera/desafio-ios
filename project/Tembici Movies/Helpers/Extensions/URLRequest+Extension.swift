@@ -25,7 +25,7 @@ extension URLRequest {
         }
 
         // Add headers
-        endpoint.headers?.forEach { key, value in
+        endpoint.fullHeaders.forEach { key, value in
             self.addValue(value, forHTTPHeaderField: key)
         }
     }

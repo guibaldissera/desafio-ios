@@ -14,9 +14,12 @@
 		2C1BEAE42465DCB500AD3708 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C1BEAE22465DCB500AD3708 /* LaunchScreen.storyboard */; };
 		2C1BEAFA2465DCB500AD3708 /* Tembici_MoviesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1BEAF92465DCB500AD3708 /* Tembici_MoviesUITests.swift */; };
 		2C4ACFBD2466F1F6007D98CF /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4ACFBC2466F1F6007D98CF /* NetworkManager.swift */; };
-		2C4ACFBF2466F212007D98CF /* NetworkEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4ACFBE2466F212007D98CF /* NetworkEndpoint.swift */; };
 		2C4ACFC12466FA81007D98CF /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4ACFC02466FA81007D98CF /* NetworkError.swift */; };
 		2C4ACFC424672BD6007D98CF /* URLRequest+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4ACFC324672BD6007D98CF /* URLRequest+Extension.swift */; };
+		2C4ACFC724673A2F007D98CF /* MovieEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4ACFC624673A2F007D98CF /* MovieEndpoint.swift */; };
+		2C4ACFC924673B09007D98CF /* NetworkEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4ACFC824673B09007D98CF /* NetworkEndpoint.swift */; };
+		2C4ACFCE24673DF7007D98CF /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4ACFCD24673DF7007D98CF /* Config.swift */; };
+		2CC644CE2468DAEE0008F4C5 /* GenreEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC644CD2468DAEE0008F4C5 /* GenreEndpoint.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,9 +53,12 @@
 		2C1BEAF92465DCB500AD3708 /* Tembici_MoviesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tembici_MoviesUITests.swift; sourceTree = "<group>"; };
 		2C1BEAFB2465DCB500AD3708 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2C4ACFBC2466F1F6007D98CF /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
-		2C4ACFBE2466F212007D98CF /* NetworkEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkEndpoint.swift; sourceTree = "<group>"; };
 		2C4ACFC02466FA81007D98CF /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		2C4ACFC324672BD6007D98CF /* URLRequest+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+Extension.swift"; sourceTree = "<group>"; };
+		2C4ACFC624673A2F007D98CF /* MovieEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieEndpoint.swift; sourceTree = "<group>"; };
+		2C4ACFC824673B09007D98CF /* NetworkEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkEndpoint.swift; sourceTree = "<group>"; };
+		2C4ACFCD24673DF7007D98CF /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		2CC644CD2468DAEE0008F4C5 /* GenreEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreEndpoint.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +137,7 @@
 		2C1BEB072465DD2700AD3708 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				2C4ACFCD24673DF7007D98CF /* Config.swift */,
 				2C1BEAD92465DCB000AD3708 /* SceneDelegate.swift */,
 				2C1BEAD72465DCB000AD3708 /* AppDelegate.swift */,
 				2C1BEAE22465DCB500AD3708 /* LaunchScreen.storyboard */,
@@ -143,6 +150,7 @@
 		2C1BEB082465DF1F00AD3708 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				2C4ACFC5246739BD007D98CF /* MovieList */,
 				2C1BEADB2465DCB000AD3708 /* ViewController.swift */,
 			);
 			path = Scenes;
@@ -169,7 +177,7 @@
 			children = (
 				2C4ACFBB2466F0C2007D98CF /* Endpoints */,
 				2C4ACFBC2466F1F6007D98CF /* NetworkManager.swift */,
-				2C4ACFBE2466F212007D98CF /* NetworkEndpoint.swift */,
+				2C4ACFC824673B09007D98CF /* NetworkEndpoint.swift */,
 				2C4ACFC02466FA81007D98CF /* NetworkError.swift */,
 			);
 			path = Network;
@@ -178,6 +186,8 @@
 		2C4ACFBB2466F0C2007D98CF /* Endpoints */ = {
 			isa = PBXGroup;
 			children = (
+				2C4ACFC624673A2F007D98CF /* MovieEndpoint.swift */,
+				2CC644CD2468DAEE0008F4C5 /* GenreEndpoint.swift */,
 			);
 			path = Endpoints;
 			sourceTree = "<group>";
@@ -188,6 +198,13 @@
 				2C4ACFC324672BD6007D98CF /* URLRequest+Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		2C4ACFC5246739BD007D98CF /* MovieList */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = MovieList;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -343,11 +360,14 @@
 			files = (
 				2C4ACFBD2466F1F6007D98CF /* NetworkManager.swift in Sources */,
 				2C4ACFC424672BD6007D98CF /* URLRequest+Extension.swift in Sources */,
+				2C4ACFCE24673DF7007D98CF /* Config.swift in Sources */,
 				2C1BEADC2465DCB000AD3708 /* ViewController.swift in Sources */,
+				2C4ACFC924673B09007D98CF /* NetworkEndpoint.swift in Sources */,
 				2C4ACFC12466FA81007D98CF /* NetworkError.swift in Sources */,
 				2C1BEAD82465DCB000AD3708 /* AppDelegate.swift in Sources */,
 				2C1BEADA2465DCB000AD3708 /* SceneDelegate.swift in Sources */,
-				2C4ACFBF2466F212007D98CF /* NetworkEndpoint.swift in Sources */,
+				2CC644CE2468DAEE0008F4C5 /* GenreEndpoint.swift in Sources */,
+				2C4ACFC724673A2F007D98CF /* MovieEndpoint.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -520,8 +540,10 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.br.tembici.Tembici-Movies";
 				PRODUCT_NAME = "Bici Movies";
+				SERVER_URL = "https://api.themoviedb.org/3";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
+				TOKEN_API = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZDkzNzVkMGUwM2UwOGJkMDhlYTNjMGFkMWQ4MTg3MSIsInN1YiI6IjVlYjZjNWQ4YmJlMWRkMDAyMTgxYzYxMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.lQgOK8eCIG3AwipgupumhvR-V_UdG1JYqOKbg2qdmQk";
 			};
 			name = Debug;
 		};
@@ -538,8 +560,10 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.br.tembici.Tembici-Movies";
 				PRODUCT_NAME = "Bici Movies";
+				SERVER_URL = "https://api.themoviedb.org/3";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
+				TOKEN_API = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZDkzNzVkMGUwM2UwOGJkMDhlYTNjMGFkMWQ4MTg3MSIsInN1YiI6IjVlYjZjNWQ4YmJlMWRkMDAyMTgxYzYxMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.lQgOK8eCIG3AwipgupumhvR-V_UdG1JYqOKbg2qdmQk";
 			};
 			name = Release;
 		};

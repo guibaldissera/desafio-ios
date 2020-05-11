@@ -24,13 +24,27 @@ class NetworkManager {
     }
 
     // MARK: - Methods
-    func request<T>(endpoint: NetworkEndpoint, completion: @escaping RequestResult<T>) where T: Decodable {
+
+    /// Request method to get response in String format
+    /// - Parameters:
+    ///   - endpoint: data to do request
+    ///   - completion: completion to receive response for request
+    func request(endpoint: NetworkEndpoint, completion: @escaping RequestResult<String>) {
+        self.request(endpoint: endpoint, withDecodeType: String.self, completion: completion)
+    }
+
+    /// Request method to get response in format based on decode type
+    /// - Parameters:
+    ///   - endpoint: data to do request
+    ///   - withDecodeType: type to decode response
+    ///   - completion: completion to receive response for request
+    func request<T>(endpoint: NetworkEndpoint, withDecodeType: T.Type, completion: @escaping RequestResult<T>) where T: Decodable {
 
         // Create url request based in endpoint
         let request = URLRequest(with: endpoint)
 
         // Create new data task
-        let task = session.dataTask(with: request, completionHandler: { [unowned self] (data, response, error) in
+        let task = session.dataTask(with: request, completionHandler: { (data, response, error) in
             self.handleTask(data: data, response: response, error: error, completion: completion)
         })
         task.resume()

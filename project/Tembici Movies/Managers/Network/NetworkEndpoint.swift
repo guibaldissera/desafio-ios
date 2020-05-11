@@ -24,7 +24,6 @@ protocol NetworkEndpoint {
 
     // MARK: Default properties
 
-    var baseURL: URL { get }
     var path: String { get }
     var method: NetworkMethod { get }
     var bodyParams: Parameters? { get }
@@ -39,7 +38,7 @@ extension NetworkEndpoint {
     /// Property for help to create complete url.
     var fullURL: URL {
         // Concat base url with endpoint path
-        let url = self.baseURL.appendingPathComponent(self.path)
+        let url = Config.ServerURL.appendingPathComponent(self.path)
 
         // Valida params
         if let queryParams = self.queryParams {
@@ -47,6 +46,28 @@ extension NetworkEndpoint {
         } else {
             return url
         }
+    }
+
+    /// Property to get headers with default data
+    var fullHeaders: Headers {
+        if let headers = self.headers {
+            // If exist setted headers, need to add default headers
+            var auxiliarHeader = headers
+            for item in defaultHeaders {
+                auxiliarHeader[item.key] = item.value
+            }
+            return auxiliarHeader
+        } else {
+            // Otherwise, only send default headers
+            return defaultHeaders
+        }
+    }
+
+    private var defaultHeaders: Headers {
+        return [
+            "Authorization": "Bearer \(Config.ServerToken)",
+            "Content-Type": "application/json;charset=utf-8"
+        ]
     }
 
     /// Add query params in URL
