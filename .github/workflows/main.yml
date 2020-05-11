@@ -1,0 +1,21 @@
+name: Test Action
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  test:
+    name: Test
+    runs-on: macos-latest
+    strategy:
+        matrix:
+          destination: ['platform=iOS Simulator,OS=latest,name=iPhone 11']
+    steps:
+      - uses: actions/checkout@master
+      - name: Test with ${{ matrix.destination }}
+        run: |
+          cd project
+          xcodebuild clean test -project "${project}.xcodeproj" -scheme "${project}" -destination "${{ matrix.destination }}" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
+        env:
+          project: "Tembici Movies"

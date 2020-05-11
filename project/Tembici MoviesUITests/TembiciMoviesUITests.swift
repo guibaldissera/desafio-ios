@@ -1,5 +1,5 @@
 //
-//  Tembici_MoviesUITests.swift
+//  TembiciMoviesUITests.swift
 //  Tembici MoviesUITests
 //
 //  Created by Guilherme Baldissera on 08/05/20.

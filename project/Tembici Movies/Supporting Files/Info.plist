@@ -20,6 +20,10 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>ServerToken</key>
+	<string>$(TOKEN_API)</string>
+	<key>ServerURL</key>
+	<string>$(SERVER_URL)</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -47,10 +51,6 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
-	<key>ServerURL</key>
-	<string>$(SERVER_URL)</string>
-	<key>ServerToken</key>
-	<string>$(TOKEN_API)</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
