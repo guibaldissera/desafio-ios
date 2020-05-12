@@ -26,6 +26,7 @@
 		2CC644CE2468DAEE0008F4C5 /* GenreEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC644CD2468DAEE0008F4C5 /* GenreEndpoint.swift */; };
 		2CD01B902469A972000E7307 /* TembiciMoviesTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD01B8F2469A972000E7307 /* TembiciMoviesTest.swift */; };
 		2CD01B92246B057D000E7307 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD01B91246B057D000E7307 /* CacheManager.swift */; };
+		2CD01B94246B674A000E7307 /* DecodeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD01B93246B674A000E7307 /* DecodeManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		2CC644CD2468DAEE0008F4C5 /* GenreEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreEndpoint.swift; sourceTree = "<group>"; };
 		2CD01B8F2469A972000E7307 /* TembiciMoviesTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TembiciMoviesTest.swift; sourceTree = "<group>"; };
 		2CD01B91246B057D000E7307 /* CacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
+		2CD01B93246B674A000E7307 /* DecodeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodeManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +183,8 @@
 			isa = PBXGroup;
 			children = (
 				2C4ACFBA2466F05E007D98CF /* Network */,
+				2CD01B93246B674A000E7307 /* DecodeManager.swift */,
+				2C4ACFBC2466F1F6007D98CF /* NetworkManager.swift */,
 				2CD01B91246B057D000E7307 /* CacheManager.swift */,
 			);
 			path = Managers;
@@ -191,7 +195,6 @@
 			children = (
 				2C7FE8162469737300C7A95E /* Decodables */,
 				2C4ACFBB2466F0C2007D98CF /* Endpoints */,
-				2C4ACFBC2466F1F6007D98CF /* NetworkManager.swift */,
 				2C4ACFC824673B09007D98CF /* NetworkEndpoint.swift */,
 				2C4ACFC02466FA81007D98CF /* NetworkError.swift */,
 			);
@@ -398,6 +401,7 @@
 				2C1BEAD82465DCB000AD3708 /* AppDelegate.swift in Sources */,
 				2C7FE81C24699B3300C7A95E /* Genre.swift in Sources */,
 				2C1BEADA2465DCB000AD3708 /* SceneDelegate.swift in Sources */,
+				2CD01B94246B674A000E7307 /* DecodeManager.swift in Sources */,
 				2CC644CE2468DAEE0008F4C5 /* GenreEndpoint.swift in Sources */,
 				2C4ACFC724673A2F007D98CF /* MovieEndpoint.swift in Sources */,
 			);
