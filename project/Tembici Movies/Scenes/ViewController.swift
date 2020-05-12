@@ -15,8 +15,8 @@ class ViewController: UIViewController {
         self.view.backgroundColor = UIColor.systemYellow
         NetworkManager().request(
             endpoint: MovieEndpoint.getPopularMovies(page: 1),
-            withDecodeType: MovieList.self) { result in
-            print(result)
+            withDecodeType: MovieList.self) { (result, cached) in
+            print("Received from cache: \(cached)\nData: ", result)
         }
     }
 }

@@ -18,6 +18,7 @@ extension URLRequest {
 
         // Add method
         self.httpMethod = endpoint.method.rawValue
+        self.cachePolicy = .returnCacheDataElseLoad
 
         // Add body params
         if let params = endpoint.bodyParams {

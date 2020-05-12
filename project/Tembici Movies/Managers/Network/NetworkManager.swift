@@ -11,8 +11,7 @@ import Foundation
 class NetworkManager {
 
     // MARK: - TypeAlias
-    typealias NetworkDefaultResult<T> = Result<T, NetworkError>
-    typealias RequestResult<T> = (NetworkDefaultResult<T>) -> Void
+    typealias RequestResult<T> = (_ result: Result<T, NetworkError>, _ fromCache: Bool) -> Void
 
     // MARK: - Properties
     private var session: URLSession
@@ -39,14 +38,52 @@ class NetworkManager {
     ///   - endpoint: data to do request
     ///   - withDecodeType: type to decode response
     ///   - completion: completion to receive response for request
-    func request<T>(endpoint: NetworkEndpoint, withDecodeType: T.Type, completion: @escaping RequestResult<T>) where T: Decodable {
+    func request<T: Decodable>(endpoint: NetworkEndpoint, withDecodeType: T.Type, completion: @escaping RequestResult<T>) {
 
         // Create url request based in endpoint
         let request = URLRequest(with: endpoint)
 
+        // Create cache manager
+        let cache = CacheManager(for: request)
+
+        // Get from cache
+        if let dataFromCache = cache.getCache(), let decodedData: T = self.decodeData(dataFromCache) {
+            completion(.success(decodedData), true)
+        }
+
         // Create new data task
         let task = session.dataTask(with: request, completionHandler: { (data, response, error) in
-            self.handleTask(data: data, response: response, error: error, completion: completion)
+
+            // Handle the task received from request
+            let handledTask = self.handleTask(data: data, response: response, error: error)
+
+            // Validate if the task is handled
+            switch handledTask {
+            case let .failure(handledError):
+                completion(.failure(handledError), false)
+
+            case let .success(handledData):
+                // Decode data received from task
+                let resultDecoder: Result<T, NetworkError> = self.tryToDecodeData(handledData)
+
+                // Validate if the data is decoded
+                switch resultDecoder {
+                case let .success(decodedData):
+
+                    if !cache.isEqual(data: handledData) {
+                        cache.updateCache(data: handledData, response: response)
+                        completion(.success(decodedData), false)
+                    } else {
+                        // Nothing to do
+                        // If received data is equal data from cache,
+                        // the data is already up to date,
+                        // don't need to refresh screen
+                    }
+
+                case let .failure(decodedError):
+                    completion(.failure(decodedError), false)
+                }
+            }
         })
         task.resume()
     }
@@ -59,50 +96,53 @@ class NetworkManager {
     ///   - response: response received
     ///   - error: error received if exist
     ///   - completion: completion to resolve when task handled
-    private func handleTask<T>(data: Data?, response: URLResponse?, error: Error?, completion: @escaping RequestResult<T>) where T: Decodable {
+    private func handleTask(data: Data?, response: URLResponse?, error: Error?) -> Result<Data, NetworkError> {
 
         // Received an error unexpected
         guard error == nil else {
-            completion(.failure(.unexpected))
-            return
+            return .failure(.unexpected)
         }
         // Received a unexpected or empty response
         guard let response = response as? HTTPURLResponse else {
-            completion(.failure(.emptyResponse))
-            return
+            return .failure(.emptyResponse)
         }
 
         // Get completion result based on status code
-        let completionResult: NetworkDefaultResult<T>
+        let errorResult: NetworkError
 
         // Validate response
         switch response.statusCode {
         case 200...299:
             if let data = data {
-                completionResult = self.decodeData(data)
+                return .success(data)
             } else {
-                completionResult = .failure(.emptyData)
+                errorResult = .emptyData
             }
         case 401:
-            completionResult = .failure(.apiUnauthorized)
+            errorResult = .apiUnauthorized
         case 404:
-            completionResult = .failure(.apiPathNotFound)
+            errorResult = .apiPathNotFound
         case 500:
-            completionResult = .failure(.apiError)
+            errorResult = .apiError
         default:
-            completionResult = .failure(.unexpected)
+            errorResult = .unexpected
         }
-
-        // Send result
-        completion(completionResult)
+        return .failure(errorResult)
     }
 
-    /// Method to decode data trwoing the error
+    /// Auxiliar method to decod data without validations
     /// - Parameter data: data to decode
-    private func decodeData<T>(_ data: Data) -> NetworkDefaultResult<T> where T: Decodable {
+    private func decodeData<T: Decodable>(_ data: Data) -> T? {
+        let model = try? JSONDecoder().decode(T.self, from: data)
+        return model
+    }
+
+    /// Method to decode data throwing the error
+    /// - Parameter data: data to decode
+    private func tryToDecodeData<T: Decodable>(_ data: Data) -> Result<T, NetworkError> {
 
         // Variable to auxiliar completion
-        let decodeResult: NetworkDefaultResult<T>
+        let decodeResult: Result<T, NetworkError>
 
         // Try to decode model
         do {

@@ -35,6 +35,8 @@ protocol NetworkEndpoint {
 
 extension NetworkEndpoint {
 
+    // MARK: Extended Properties
+
     /// Property for help to create complete url.
     var fullURL: URL {
         // Concat base url with endpoint path
@@ -63,12 +65,16 @@ extension NetworkEndpoint {
         }
     }
 
+    // MARK: Private Extended Properties
+
     private var defaultHeaders: Headers {
         return [
             "Authorization": "Bearer \(Config.ServerToken)",
             "Content-Type": "application/json;charset=utf-8"
         ]
     }
+
+    // MARK: Private Methods
 
     /// Add query params in URL
     /// - Parameters:

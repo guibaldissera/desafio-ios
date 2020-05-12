@@ -25,6 +25,7 @@
 		2C7FE81E24699B6900C7A95E /* GenreList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7FE81D24699B6900C7A95E /* GenreList.swift */; };
 		2CC644CE2468DAEE0008F4C5 /* GenreEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC644CD2468DAEE0008F4C5 /* GenreEndpoint.swift */; };
 		2CD01B902469A972000E7307 /* TembiciMoviesTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD01B8F2469A972000E7307 /* TembiciMoviesTest.swift */; };
+		2CD01B92246B057D000E7307 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD01B91246B057D000E7307 /* CacheManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,7 @@
 		2C7FE81D24699B6900C7A95E /* GenreList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreList.swift; sourceTree = "<group>"; };
 		2CC644CD2468DAEE0008F4C5 /* GenreEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreEndpoint.swift; sourceTree = "<group>"; };
 		2CD01B8F2469A972000E7307 /* TembiciMoviesTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TembiciMoviesTest.swift; sourceTree = "<group>"; };
+		2CD01B91246B057D000E7307 /* CacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				2C4ACFBA2466F05E007D98CF /* Network */,
+				2CD01B91246B057D000E7307 /* CacheManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -383,6 +386,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C4ACFBD2466F1F6007D98CF /* NetworkManager.swift in Sources */,
+				2CD01B92246B057D000E7307 /* CacheManager.swift in Sources */,
 				2C7FE81E24699B6900C7A95E /* GenreList.swift in Sources */,
 				2C4ACFC424672BD6007D98CF /* URLRequest+Extension.swift in Sources */,
 				2C7FE81A24699B1D00C7A95E /* Movie.swift in Sources */,

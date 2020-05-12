@@ -1,4 +1,4 @@
-name: Test Action
+name: Movies Action
 
 on:
   push:
@@ -7,6 +7,9 @@ on:
 defaults:
   run:
     working-directory: project
+
+env:
+  PROJECT_NAME: "Tembici Movies"
 
 jobs:
   test:
@@ -20,9 +23,7 @@ jobs:
         uses: actions/checkout@master
       - id: testStep
         name: Test with ${{ matrix.destination }}
-        run: xcodebuild clean test -project "${PROJECT}.xcodeproj" -scheme "${PROJECT}" -destination "${{ matrix.destination }}" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
-        env:
-          PROJECT: "Tembici Movies"
+        run: xcodebuild clean test -project "${PROJECT_NAME}.xcodeproj" -scheme "${PROJECT_NAME}" -destination "${{ matrix.destination }}" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
 
   build:
     name: Build Project
@@ -33,6 +34,6 @@ jobs:
         uses: actions/checkout@master
       - id: buildStep
         name: Build
-        run: xcodebuild clean build -project "${PROJECT}.xcodeproj" -scheme "${PROJECT}" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO CODE_SIGNING_ALLOWED=NO 
+        run: xcodebuild clean build -project "${PROJECT_NAME}.xcodeproj" -scheme "${PROJECT_NAME}" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO CODE_SIGNING_ALLOWED=NO 
         env:
           PROJECT: "Tembici Movies"
