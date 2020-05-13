@@ -23,6 +23,8 @@ class FavoritesViewController: UIViewController {
     var router: (NSObjectProtocol & FavoritesRoutingLogic & FavoritesDataPassing)?
 
     // MARK: View Properties
+    var alertView: AlertView?
+    var tableView: UITableView?
 
     // MARK: Other Properties
 
@@ -42,7 +44,10 @@ class FavoritesViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .systemBlue
+
+        // Setup view with objects
+        self.setupView()
+
         doSomething()
     }
 
@@ -61,6 +66,13 @@ class FavoritesViewController: UIViewController {
         router.dataStore = interactor
     }
 
+    private func setupView() {
+        // Update view Properties
+        view.backgroundColor = .systemBackground
+
+        self.createAlertView(type: .withoutFavorites)
+    }
+
     // MARK: Routing Methods
 
     // MARK: Interactor Method Calls
@@ -68,6 +80,26 @@ class FavoritesViewController: UIViewController {
     func doSomething() {
         let request = Favorites.Something.Request()
         interactor?.doSomething(request: request)
+    }
+
+    // MARK: Private Methods
+
+    private func createAlertView(type: AlertViewType) {
+        // If exist other alert view showed, remove and clean
+        if alertView != nil {
+            alertView?.removeFromSuperview()
+            alertView = nil
+        }
+
+        // Create new and configure alert
+        alertView = AlertView(with: type)
+        alertView!.translatesAutoresizingMaskIntoConstraints = false
+
+        // Add alert to view
+        view.addSubview(alertView!)
+
+        // Adjust constraints
+        self.constraintsToSuperview(alertView!)
     }
 }
 

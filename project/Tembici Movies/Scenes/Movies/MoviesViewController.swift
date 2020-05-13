@@ -101,26 +101,7 @@ class MoviesViewController: UIViewController {
         view.addSubview(alertView!)
 
         // Adjust constraints
-        self.adjustViewToSuperview(alertView!)
-    }
-
-    private func adjustViewToSuperview(_ newView: UIView) {
-        // Creating constraints
-        newView.leadingAnchor.constraint(
-            equalToSystemSpacingAfter: view.leadingAnchor,
-            multiplier: 0).isActive = true
-        newView.trailingAnchor.constraint(
-            equalToSystemSpacingAfter: view.trailingAnchor,
-            multiplier: 0).isActive = true
-        newView.topAnchor.constraint(
-            equalToSystemSpacingBelow: view.topAnchor,
-            multiplier: 0).isActive = true
-        newView.bottomAnchor.constraint(
-            equalToSystemSpacingBelow: view.bottomAnchor,
-            multiplier: 0).isActive = true
-
-        // Update view with new components
-        view.layoutIfNeeded()
+        self.constraintsToSuperview(alertView!)
     }
 }
 

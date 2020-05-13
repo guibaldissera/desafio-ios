@@ -42,6 +42,7 @@
 		2CB0B718246B90270081AA55 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB0B712246B90270081AA55 /* MovieDetailViewController.swift */; };
 		2CB0B719246B90270081AA55 /* MovieDetailInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB0B713246B90270081AA55 /* MovieDetailInteractor.swift */; };
 		2CB0B71D246C40FE0081AA55 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB0B71C246C40FE0081AA55 /* AlertView.swift */; };
+		2CB0B71F246C6CCA0081AA55 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB0B71E246C6CCA0081AA55 /* UIViewController+Extensions.swift */; };
 		2CC644CE2468DAEE0008F4C5 /* GenreEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC644CD2468DAEE0008F4C5 /* GenreEndpoint.swift */; };
 		2CD01B902469A972000E7307 /* TembiciMoviesTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD01B8F2469A972000E7307 /* TembiciMoviesTest.swift */; };
 		2CD01B92246B057D000E7307 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD01B91246B057D000E7307 /* CacheManager.swift */; };
@@ -107,6 +108,7 @@
 		2CB0B712246B90270081AA55 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		2CB0B713246B90270081AA55 /* MovieDetailInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailInteractor.swift; sourceTree = "<group>"; };
 		2CB0B71C246C40FE0081AA55 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
+		2CB0B71E246C6CCA0081AA55 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		2CC644CD2468DAEE0008F4C5 /* GenreEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreEndpoint.swift; sourceTree = "<group>"; };
 		2CD01B8F2469A972000E7307 /* TembiciMoviesTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TembiciMoviesTest.swift; sourceTree = "<group>"; };
 		2CD01B91246B057D000E7307 /* CacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 			isa = PBXGroup;
 			children = (
 				2C4ACFC324672BD6007D98CF /* URLRequest+Extension.swift */,
+				2CB0B71E246C6CCA0081AA55 /* UIViewController+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -481,6 +484,7 @@
 				2CB0B70B246B90050081AA55 /* FavoritesViewController.swift in Sources */,
 				2CB0B714246B90270081AA55 /* MovieDetailPresenter.swift in Sources */,
 				2CB0B70C246B90050081AA55 /* FavoritesInteractor.swift in Sources */,
+				2CB0B71F246C6CCA0081AA55 /* UIViewController+Extensions.swift in Sources */,
 				2CB0B6FA246B8F980081AA55 /* MoviesPresenter.swift in Sources */,
 				2CD01B92246B057D000E7307 /* CacheManager.swift in Sources */,
 				2C7FE81E24699B6900C7A95E /* GenreList.swift in Sources */,

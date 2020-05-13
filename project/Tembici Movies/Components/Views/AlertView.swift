@@ -13,6 +13,7 @@ enum AlertViewType {
     case error(message: String)
     case searching
     case searchFailed(message: String)
+    case withoutFavorites
 }
 
 class AlertView: UIView {
@@ -130,6 +131,10 @@ class AlertView: UIView {
         case let .error(message):
             label.text = message
             imageView.image = UIImage(named: "icon-info")
+
+        case .withoutFavorites:
+            label.text = "Ops, você não tem favoritos"
+            imageView.image = UIImage(named: "icon-without-favorites")
         }
     }
 }
