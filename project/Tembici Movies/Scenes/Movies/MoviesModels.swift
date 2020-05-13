@@ -14,7 +14,22 @@ enum Movies {
 
     enum GetMovies {
         struct Request {}
-        struct Response {}
-        struct ViewModel {}
+
+        struct Response {
+            var newMovies: [Movie]
+            var fromCache: Bool
+            var error: NetworkError?
+        }
+
+        struct ViewModel {
+            var movies: [SimpleMovie]
+        }
     }
+}
+
+struct SimpleMovie {
+    let identifier: Int
+    let image: UIImage
+    let name: String
+    let favorited: Bool
 }

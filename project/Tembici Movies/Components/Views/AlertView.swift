@@ -14,6 +14,7 @@ enum AlertViewType {
     case searching
     case searchFailed(message: String)
     case withoutFavorites
+    case withoutInternet
 }
 
 class AlertView: UIView {
@@ -135,6 +136,10 @@ class AlertView: UIView {
         case .withoutFavorites:
             label.text = NSLocalizedString("Sem favoritos", comment: "Without favorites (Friendly)")
             imageView.image = UIImage(named: "icon-without-favorites")
+
+        case .withoutInternet:
+            label.text = NSLocalizedString("Sem internet", comment: "Without wifi (Friendly)")
+            imageView.image = UIImage(named: "icon-no-wifi")
         }
     }
 }

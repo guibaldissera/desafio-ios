@@ -12,5 +12,11 @@ import UIKit
 
 class MoviesWorker {
 
-    func getMovies() {}
+    func getMovies(page: Int, completion: @escaping (Result<MovieList, NetworkError>, _ fromCache: Bool) -> Void) {
+        let endpoint = MovieEndpoint.getPopularMovies(page: page)
+        NetworkManager().request(
+            endpoint: endpoint,
+            withDecodeType: MovieList.self,
+            completion: completion)
+    }
 }

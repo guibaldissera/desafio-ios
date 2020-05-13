@@ -19,7 +19,22 @@ protocol MoviesPresentationLogic {
 class MoviesPresenter {
 
     // MARK: Scene Properties
+
     weak var viewController: MoviesDisplayLogic?
+
+    // MARK: Private Methods
+
+    private func formatMovies(_ movies: [Movie]) -> [SimpleMovie] {
+        let formattedMovies: [SimpleMovie] = movies.map { movie -> SimpleMovie in
+            let simpleMovie = SimpleMovie(
+                identifier: movie.identfier,
+                image: UIImage(),
+                name: movie.title,
+                favorited: false)
+            return simpleMovie
+        }
+        return formattedMovies
+    }
 }
 
 // MARK: - Movies Presenter Extension with PresentationLogic
@@ -27,7 +42,18 @@ class MoviesPresenter {
 extension MoviesPresenter: MoviesPresentationLogic {
 
     func presentMovies(response: Movies.GetMovies.Response) {
-        let viewModel = Movies.GetMovies.ViewModel()
-        viewController?.displayMovies(viewModel: viewModel)
+
+        // Validate response to present on view
+        if response.error != nil {
+            if case NetworkError.sessionUnavailble = response.error! {
+                viewController?.displayNoInternet()
+            } else {
+                let errorMessage = NSLocalizedString("Erro na lista de filmes", comment: "Movie list error (Friendly)")
+                viewController?.displayError(message: errorMessage)
+            }
+        } else {
+            let viewModel = Movies.GetMovies.ViewModel(movies: formatMovies(response.newMovies))
+            viewController?.displayMovies(viewModel: viewModel)
+        }
     }
 }

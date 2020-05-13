@@ -60,7 +60,9 @@ class NetworkManager {
             // Validate if the task is handled
             switch handledTask {
             case let .failure(handledError):
-                completion(.failure(handledError), false)
+                DispatchQueue.main.async {
+                    completion(.failure(handledError), false)
+                }
 
             case let .success(handledData):
                 // Decode data received from task
@@ -72,7 +74,9 @@ class NetworkManager {
 
                     if !cache.isEqual(data: handledData) {
                         cache.updateCache(data: handledData, response: response)
-                        completion(.success(decodedData), false)
+                        DispatchQueue.main.async {
+                            completion(.success(decodedData), false)
+                        }
                     } else {
                         // Nothing to do
                         // If received data is equal data from cache,
@@ -81,7 +85,9 @@ class NetworkManager {
                     }
 
                 case let .failure(decodedError):
-                    completion(.failure(decodedError), false)
+                    DispatchQueue.main.async {
+                        completion(.failure(decodedError), false)
+                    }
                 }
             }
         })
@@ -100,7 +106,11 @@ class NetworkManager {
 
         // Received an error unexpected
         guard error == nil else {
-            return .failure(.unexpected)
+            if let urlError = error as? URLError, urlError.code == URLError.notConnectedToInternet {
+                return .failure(.sessionUnavailble)
+            } else {
+                return .failure(.unexpected)
+            }
         }
         // Received a unexpected or empty response
         guard let response = response as? HTTPURLResponse else {

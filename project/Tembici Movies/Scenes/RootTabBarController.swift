@@ -31,11 +31,5 @@ class RootTabBarController: UITabBarController {
         // Upgrade background
         self.tabBar.tintColor = UIColor(named: "tabbar-tint-color")
         self.tabBar.barTintColor = UIColor(named: "tabbar-background-color")
-
-//        NetworkManager().request(
-//            endpoint: MovieEndpoint.getPopularMovies(page: 1),
-//            withDecodeType: MovieList.self) { (result, cached) in
-//            print("Received from cache: \(cached)\nData: ", result)
-//        }
     }
 }

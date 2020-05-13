@@ -712,7 +712,7 @@
 				SERVER_URL = "https://api.themoviedb.org/3";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
-				TOKEN_API = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZDkzNzVkMGUwM2UwOGJkMDhlYTNjMGFkMWQ4MTg3MSIsInN1YiI6IjVlYjZjNWQ4YmJlMWRkMDAyMTgxYzYxMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.lQgOK8eCIG3AwipgupumhvR-V_UdG1JYqOKbg2qdmQk";
+				TOKEN_API = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZDkzNzVkMGUwM2UwOGJkMDhlYTNjMGFkMWQ4MTg3MSIsInN1YiI6IjVlYjZjNWQ4YmJlMWRkMDAyMTgxYzYxMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.lQgOK8eCIG3AwipgupumhvR-V_UdG1JYqOKbg2qdmQk2";
 			};
 			name = Debug;
 		};
@@ -732,7 +732,7 @@
 				SERVER_URL = "https://api.themoviedb.org/3";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
-				TOKEN_API = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZDkzNzVkMGUwM2UwOGJkMDhlYTNjMGFkMWQ4MTg3MSIsInN1YiI6IjVlYjZjNWQ4YmJlMWRkMDAyMTgxYzYxMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.lQgOK8eCIG3AwipgupumhvR-V_UdG1JYqOKbg2qdmQk";
+				TOKEN_API = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZDkzNzVkMGUwM2UwOGJkMDhlYTNjMGFkMWQ4MTg3MSIsInN1YiI6IjVlYjZjNWQ4YmJlMWRkMDAyMTgxYzYxMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.lQgOK8eCIG3AwipgupumhvR-V_UdG1JYqOKbg2qdmQk2";
 			};
 			name = Release;
 		};

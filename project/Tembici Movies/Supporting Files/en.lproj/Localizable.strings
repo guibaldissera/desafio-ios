@@ -14,3 +14,5 @@
 "Carregando" = "Loading";
 "Buscando" = "Searching";
 "Sem favoritos" = "Oh no, you don't have favorite movies yet";
+"Erro na lista de filmes" = "Oh no, fail to get movie list";
+"Sem internet" = "Oh no, you are offline";

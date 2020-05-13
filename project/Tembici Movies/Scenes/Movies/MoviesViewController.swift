@@ -12,6 +12,8 @@ import UIKit
 
 protocol MoviesDisplayLogic: class {
     func displayMovies(viewModel: Movies.GetMovies.ViewModel)
+    func displayError(message: String)
+    func displayNoInternet()
 }
 
 // MARK: - Movies ViewController Class
@@ -110,4 +112,12 @@ class MoviesViewController: UIViewController {
 extension MoviesViewController: MoviesDisplayLogic {
 
     func displayMovies(viewModel: Movies.GetMovies.ViewModel) {}
+
+    func displayError(message: String) {
+        self.createAlertView(type: .error(message: message))
+    }
+
+    func displayNoInternet() {
+        self.createAlertView(type: .withoutInternet)
+    }
 }
