@@ -11,7 +11,7 @@ import UIKit
 // MARK: - Movies DisplayLogic Protocol
 
 protocol MoviesDisplayLogic: class {
-    func displaySomething(viewModel: Movies.Something.ViewModel)
+    func displayMovies(viewModel: Movies.GetMovies.ViewModel)
 }
 
 // MARK: - Movies ViewController Class
@@ -23,6 +23,8 @@ class MoviesViewController: UIViewController {
     var router: (NSObjectProtocol & MoviesRoutingLogic & MoviesDataPassing)?
 
     // MARK: View Properties
+    var alertView: AlertView?
+    var tableView: UITableView?
 
     // MARK: Other Properties
 
@@ -30,20 +32,24 @@ class MoviesViewController: UIViewController {
 
     init() {
         super.init(nibName: nil, bundle: nil)
-        setup()
+        self.setup()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setup()
+        self.setup()
     }
 
     // MARK: View lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .systemRed
-        doSomething()
+
+        // Setup view with objects
+        self.setupView()
+
+        // Get data from server
+        self.getMovieList()
     }
 
     // MARK: Setup
@@ -61,13 +67,60 @@ class MoviesViewController: UIViewController {
         router.dataStore = interactor
     }
 
+    private func setupView() {
+        // Update view Properties
+        view.backgroundColor = .systemBackground
+
+        self.createAlertView(type: .loading)
+    }
+
     // MARK: Routing Methods
 
     // MARK: Interactor Method Calls
 
-    func doSomething() {
-        let request = Movies.Something.Request()
-        interactor?.doSomething(request: request)
+    /// Call interactor to get movie list
+    func getMovieList() {
+        let request = Movies.GetMovies.Request()
+        interactor?.getMovies(request: request)
+    }
+
+    // MARK: Private Methods
+
+    private func createAlertView(type: AlertViewType) {
+        // If exist other alert view showed, remove and clean
+        if alertView != nil {
+            alertView?.removeFromSuperview()
+            alertView = nil
+        }
+
+        // Create new and configure alert
+        alertView = AlertView(with: type)
+        alertView!.translatesAutoresizingMaskIntoConstraints = false
+
+        // Add alert to view
+        view.addSubview(alertView!)
+
+        // Adjust constraints
+        self.adjustViewToSuperview(alertView!)
+    }
+
+    private func adjustViewToSuperview(_ newView: UIView) {
+        // Creating constraints
+        newView.leadingAnchor.constraint(
+            equalToSystemSpacingAfter: view.leadingAnchor,
+            multiplier: 0).isActive = true
+        newView.trailingAnchor.constraint(
+            equalToSystemSpacingAfter: view.trailingAnchor,
+            multiplier: 0).isActive = true
+        newView.topAnchor.constraint(
+            equalToSystemSpacingBelow: view.topAnchor,
+            multiplier: 0).isActive = true
+        newView.bottomAnchor.constraint(
+            equalToSystemSpacingBelow: view.bottomAnchor,
+            multiplier: 0).isActive = true
+
+        // Update view with new components
+        view.layoutIfNeeded()
     }
 }
 
@@ -75,5 +128,5 @@ class MoviesViewController: UIViewController {
 
 extension MoviesViewController: MoviesDisplayLogic {
 
-    func displaySomething(viewModel: Movies.Something.ViewModel) {}
+    func displayMovies(viewModel: Movies.GetMovies.ViewModel) {}
 }

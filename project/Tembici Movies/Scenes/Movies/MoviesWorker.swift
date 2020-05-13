@@ -12,5 +12,5 @@ import UIKit
 
 class MoviesWorker {
 
-    func doSomeWork() {}
+    func getMovies() {}
 }

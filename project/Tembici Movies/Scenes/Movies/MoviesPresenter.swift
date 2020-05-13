@@ -11,7 +11,7 @@ import UIKit
 // MARK: - Movies PresentationLogic Protocol
 
 protocol MoviesPresentationLogic {
-    func presentSomething(response: Movies.Something.Response)
+    func presentMovies(response: Movies.GetMovies.Response)
 }
 
 // MARK: - Movies Presenter Class
@@ -26,8 +26,8 @@ class MoviesPresenter {
 
 extension MoviesPresenter: MoviesPresentationLogic {
 
-    func presentSomething(response: Movies.Something.Response) {
-        let viewModel = Movies.Something.ViewModel()
-        viewController?.displaySomething(viewModel: viewModel)
+    func presentMovies(response: Movies.GetMovies.Response) {
+        let viewModel = Movies.GetMovies.ViewModel()
+        viewController?.displayMovies(viewModel: viewModel)
     }
 }

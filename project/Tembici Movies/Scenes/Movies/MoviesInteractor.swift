@@ -11,7 +11,7 @@ import UIKit
 // MARK: - Movies BusinessLogic Protocol
 
 protocol MoviesBusinessLogic {
-    func doSomething(request: Movies.Something.Request)
+    func getMovies(request: Movies.GetMovies.Request)
 }
 
 // MARK: - Movies DataStore Protocol
@@ -33,11 +33,11 @@ class MoviesInteractor: MoviesDataStore {
 
 extension MoviesInteractor: MoviesBusinessLogic {
 
-    func doSomething(request: Movies.Something.Request) {
+    func getMovies(request: Movies.GetMovies.Request) {
         worker = MoviesWorker()
-        worker?.doSomeWork()
+        worker?.getMovies()
 
-        let response = Movies.Something.Response()
-        presenter?.presentSomething(response: response)
+        let response = Movies.GetMovies.Response()
+        presenter?.presentMovies(response: response)
     }
 }

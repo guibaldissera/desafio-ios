@@ -12,7 +12,7 @@ import UIKit
 
 enum Movies {
 
-    enum Something {
+    enum GetMovies {
         struct Request {}
         struct Response {}
         struct ViewModel {}

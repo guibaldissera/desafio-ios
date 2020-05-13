@@ -27,7 +27,8 @@ class RootTabBarController: UITabBarController {
         self.viewControllers = [moviesViewController, favoritesViewController]
 
         // Upgrade background
-        self.tabBar.tintColor = .black
+        self.tabBar.tintColor = UIColor(named: "tabbar-tint-color")
+        self.tabBar.barTintColor = UIColor(named: "tabbar-background-color")
 
 //        NetworkManager().request(
 //            endpoint: MovieEndpoint.getPopularMovies(page: 1),

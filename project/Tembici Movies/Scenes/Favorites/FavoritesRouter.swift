@@ -11,7 +11,7 @@ import UIKit
 // MARK: - Favorites RoutingLogic Protocol
 
 @objc protocol FavoritesRoutingLogic {
-    // func routeToSomewhere()
+     func routeToMovieDetail()
 }
 
 // MARK: - Favorites DataPassing Protocol
@@ -37,22 +37,20 @@ extension FavoritesRouter: FavoritesRoutingLogic {
 
     // MARK: Routing
 
-    // func routeToSomewhere() {
-    //     let destinationVC = SomewhereViewController()
-    //     var destinationDS = destinationVC.router!.dataStore!
-    //     passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-    //     navigateToSomewhere(source: viewController!, destination: destinationVC)
-    // }
+     func routeToMovieDetail() {
+         let destinationVC = MovieDetailViewController()
+         var destinationDS = destinationVC.router!.dataStore!
+         passDataToSomewhere(source: dataStore!, destination: &destinationDS)
+         navigateToSomewhere(source: viewController!, destination: destinationVC)
+     }
 
     // MARK: Navigation
 
-    // func navigateToSomewhere(source: FavoritesViewController, destination: SomewhereViewController) {
-    //     source.show(destination, sender: nil)
-    // }
+     func navigateToSomewhere(source: FavoritesViewController, destination: MovieDetailViewController) {
+         source.show(destination, sender: nil)
+     }
 
     // MARK: Passing data
 
-    // func passDataToSomewhere(source: FavoritesDataStore, destination: inout SomewhereDataStore) {
-    //     destination.name = source.name
-    // }
+     func passDataToSomewhere(source: FavoritesDataStore, destination: inout MovieDetailDataStore) {}
 }

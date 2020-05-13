@@ -11,7 +11,7 @@ import UIKit
 // MARK: - Movies RoutingLogic Protocol
 
 @objc protocol MoviesRoutingLogic {
-    // func routeToSomewhere()
+    func routeToMovieDetail()
 }
 
 // MARK: - Movies DataPassing Protocol
@@ -37,22 +37,20 @@ extension MoviesRouter: MoviesRoutingLogic {
 
     // MARK: Routing
 
-    // func routeToSomewhere() {
-    //     let destinationVC = SomewhereViewController()
-    //     var destinationDS = destinationVC.router!.dataStore!
-    //     passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-    //     navigateToSomewhere(source: viewController!, destination: destinationVC)
-    // }
+     func routeToMovieDetail() {
+         let destinationVC = MovieDetailViewController()
+         var destinationDS = destinationVC.router!.dataStore!
+         passDataToSomewhere(source: dataStore!, destination: &destinationDS)
+         navigateToSomewhere(source: viewController!, destination: destinationVC)
+     }
 
     // MARK: Navigation
 
-    // func navigateToSomewhere(source: MoviesViewController, destination: SomewhereViewController) {
-    //     source.show(destination, sender: nil)
-    // }
+     func navigateToSomewhere(source: MoviesViewController, destination: MovieDetailViewController) {
+         source.show(destination, sender: nil)
+     }
 
     // MARK: Passing data
 
-    // func passDataToSomewhere(source: MoviesDataStore, destination: inout SomewhereDataStore) {
-    //     destination.name = source.name
-    // }
+     func passDataToSomewhere(source: MoviesDataStore, destination: inout MovieDetailDataStore) {}
 }
