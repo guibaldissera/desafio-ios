@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = window
 
         // Update view showed in window
-        window.rootViewController = ViewController()
+        window.rootViewController = RootTabBarController()
 
         // Show view
         window.makeKeyAndVisible()
