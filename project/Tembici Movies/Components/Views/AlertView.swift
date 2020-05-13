@@ -117,11 +117,11 @@ class AlertView: UIView {
         // Configure alert
         switch alertType {
         case .loading:
-            label.text = "Carregando"
+            label.text = NSLocalizedString("Carregando", comment: "Getting data")
             imageView.image = UIImage(named: "icon-loading")
 
         case .searching:
-            label.text = "Buscando"
+            label.text = NSLocalizedString("Buscando", comment: "Searching")
             imageView.image = UIImage(named: "icon-search")
 
         case let .searchFailed(message):
@@ -133,7 +133,7 @@ class AlertView: UIView {
             imageView.image = UIImage(named: "icon-info")
 
         case .withoutFavorites:
-            label.text = "Ops, você não tem favoritos"
+            label.text = NSLocalizedString("Sem favoritos", comment: "Without favorites (Friendly)")
             imageView.image = UIImage(named: "icon-without-favorites")
         }
     }

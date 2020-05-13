@@ -15,13 +15,15 @@ class RootTabBarController: UITabBarController {
 
         // Create MoviesViewController
         let moviesImage = UIImage.init(named: "icon-tabbar-movies")
+        let moviesTitle = NSLocalizedString("Filmes", comment: "Movies")
         let moviesViewController = MoviesViewController()
-        moviesViewController.tabBarItem = UITabBarItem(title: "Filmes", image: moviesImage, tag: 0)
+        moviesViewController.tabBarItem = UITabBarItem(title: moviesTitle, image: moviesImage, tag: 0)
 
         // Create FavoriteViewController
         let favoritesImage = UIImage(named: "icon-tabbar-favorites")
+        let favoritesTitle = NSLocalizedString("Favoritos", comment: "Favorites")
         let favoritesViewController = FavoritesViewController()
-        favoritesViewController.tabBarItem = UITabBarItem(title: "Favoritos", image: favoritesImage, tag: 1)
+        favoritesViewController.tabBarItem = UITabBarItem(title: favoritesTitle, image: favoritesImage, tag: 1)
 
         // Set view controllers
         self.viewControllers = [moviesViewController, favoritesViewController]
