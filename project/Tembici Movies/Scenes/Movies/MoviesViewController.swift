@@ -30,6 +30,14 @@ class MoviesViewController: UIViewController {
 
     // MARK: Other Properties
     var movies: [SimpleMovie] = []
+    var moviesFooter: String? {
+        didSet {
+            if let containerView = tableView?.footerView(forSection: 0) {
+                containerView.textLabel?.text = self.moviesFooter
+                containerView.sizeToFit()
+            }
+        }
+    }
 
     // MARK: Object lifecycle
 
@@ -56,7 +64,7 @@ class MoviesViewController: UIViewController {
         super.viewDidAppear(animated)
 
         // Get data from server
-        self.getMovieList()
+        self.getMovieList(resetingItens: true)
     }
 
     // MARK: Setup
@@ -87,8 +95,8 @@ class MoviesViewController: UIViewController {
     // MARK: Interactor Method Calls
 
     /// Call interactor to get movie list
-    func getMovieList() {
-        let request = Movies.GetMovies.Request()
+    func getMovieList(resetingItens: Bool = false) {
+        let request = Movies.GetMovies.Request(resetItens: resetingItens)
         interactor?.getMovies(request: request)
     }
 
@@ -126,7 +134,6 @@ class MoviesViewController: UIViewController {
 
         // Adjust constraints
         self.constraintsToSuperview(tableView!)
-        tableView?.isHidden = true
     }
 }
 
@@ -137,26 +144,36 @@ extension MoviesViewController: MoviesDisplayLogic {
     func displayMovies(viewModel: Movies.GetMovies.ViewModel) {
         // Remove alert view if exist
         self.removeAlertView()
-        tableView?.isHidden = false
 
         // Update movies
         movies = viewModel.movies
         tableView?.reloadData()
+
+        // Adjust movie footer string
+        moviesFooter = viewModel.movieFooter
     }
 
     func displayError(message: String) {
-        self.createAlertView(type: .error(message: message))
+        if movies.isEmpty {
+            self.createAlertView(type: .error(message: message))
+        } else {
+            moviesFooter = NSLocalizedString("Erro na lista de filmes", comment: "Movie list error (Friendly)")
+        }
     }
 
     func displayNoInternet() {
-        self.createAlertView(type: .withoutInternet)
+        if movies.isEmpty {
+            self.createAlertView(type: .withoutInternet)
+        } else {
+            moviesFooter = NSLocalizedString("Sem internet", comment: "Without wifi (Friendly)")
+        }
     }
 }
 
-extension MoviesViewController: MovieTableDataSource, MovieTableDelegate {
+extension MoviesViewController: MovieTableDataSource {
 
-    func willShowTableEnd(_ movieTable: UITableView) {
-        interactor?.getNextMovies(request: Movies.GetMovies.Request())
+    func footerTitle(_ movieTable: UITableView) -> String? {
+        return moviesFooter
     }
 
     func numberOfMovies(_ movieTable: MovieTableView) -> Int {
@@ -165,5 +182,12 @@ extension MoviesViewController: MovieTableDataSource, MovieTableDelegate {
 
     func movieTable(_ movieTable: UITableView, movieAt indexPath: IndexPath) -> SimpleMovie {
         return movies[indexPath.row]
+    }
+}
+
+extension MoviesViewController: MovieTableDelegate {
+
+    func willShowFooter(_ movieTable: UITableView) {
+        self.getMovieList()
     }
 }

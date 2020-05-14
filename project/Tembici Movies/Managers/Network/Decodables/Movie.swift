@@ -14,7 +14,7 @@ struct Movie: Decodable {
     var identfier: Int
     var title: String
     var genres: [Int]
-    var posterPath: String
+    var posterPath: String?
 
     // MARK: Coding Keys
     enum CodingKeys: String, CodingKey {

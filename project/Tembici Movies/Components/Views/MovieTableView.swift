@@ -12,13 +12,14 @@ import UIKit
 
 protocol MovieTableDataSource: class {
     func numberOfMovies(_ movieTable: MovieTableView) -> Int
+    func footerTitle(_ movieTable: UITableView) -> String?
     func movieTable(_ movieTable: UITableView, movieAt indexPath: IndexPath) -> SimpleMovie
 }
 
 // MARK: - Delegate Protocol
 
 protocol MovieTableDelegate: class {
-    func willShowTableEnd(_ movieTable: UITableView)
+    func willShowFooter(_ movieTable: UITableView)
 }
 
 class MovieTableView: UITableView {
@@ -53,6 +54,7 @@ class MovieTableView: UITableView {
 
     private func setupTableView() {
         dataSource = self
+//        prefetchDataSource = self
         delegate = self
         self.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     }
@@ -84,7 +86,11 @@ extension MovieTableView: UITableViewDataSource {
 
 extension MovieTableView: UITableViewDelegate {
 
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        // TODO: Pagination
+    func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        self.movieDelegate?.willShowFooter(self)
+    }
+
+    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        return self.movieDataSource?.footerTitle(self)
     }
 }

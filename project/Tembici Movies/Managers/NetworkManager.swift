@@ -11,7 +11,7 @@ import Foundation
 class NetworkManager {
 
     // MARK: - TypeAlias
-    typealias RequestResult<T> = (_ result: Result<T, NetworkError>, _ fromCache: Bool) -> Void
+    typealias RequestResult<T> = (_ result: Result<T, NetworkError>, _ reloadedData: Bool) -> Void
 
     // MARK: - Properties
     private var session: URLSession
@@ -39,7 +39,6 @@ class NetworkManager {
     ///   - withDecodeType: type to decode response
     ///   - completion: completion to receive response for request
     func request<T: Decodable>(endpoint: NetworkEndpoint, withDecodeType: T.Type, completion: @escaping RequestResult<T>) {
-
         // Create url request based in endpoint
         let request = URLRequest(with: endpoint)
 
@@ -47,8 +46,11 @@ class NetworkManager {
         let cache = CacheManager(for: request)
 
         // Get from cache
-        if let dataFromCache = cache.getCache(), let decodedData: T = DecodeManager.decodeData(dataFromCache) {
-            completion(.success(decodedData), true)
+        let dataFromCache = cache.getCache()
+        if let cached = dataFromCache, let decodedData: T = DecodeManager.decodeData(cached) {
+            DispatchQueue.main.async {
+                completion(.success(decodedData), false)
+            }
         }
 
         // Create new data task
@@ -72,10 +74,9 @@ class NetworkManager {
                 switch resultDecoder {
                 case let .success(decodedData):
 
-                    if !cache.isEqual(data: handledData) {
-                        cache.updateCache(data: handledData, response: response)
+                    if handledData != dataFromCache {
                         DispatchQueue.main.async {
-                            completion(.success(decodedData), false)
+                            completion(.success(decodedData), true)
                         }
                     } else {
                         // Nothing to do

@@ -16,3 +16,7 @@
 "Sem favoritos" = "Oh no, you don't have favorite movies yet";
 "Erro na lista de filmes" = "Oh no, fail to get movie list";
 "Sem internet" = "Oh no, you are offline";
+
+// Movie Table Strings
+"Carregando mais filmes" = "Loading more movies...";
+"Idioma da API" = "en-US";

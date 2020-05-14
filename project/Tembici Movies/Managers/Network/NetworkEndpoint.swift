@@ -74,6 +74,12 @@ extension NetworkEndpoint {
         ]
     }
 
+    private var defaultQueryParams: Parameters {
+        return [
+            "language": NSLocalizedString("Idioma da API", comment: "Language to get data from API")
+        ]
+    }
+
     // MARK: Private Methods
 
     /// Add query params in URL
@@ -89,6 +95,9 @@ extension NetworkEndpoint {
         components.queryItems = params.map { (key, value) in
             return URLQueryItem(name: key, value: String(describing: value))
         }
+        components.queryItems?.append(contentsOf: defaultQueryParams.map { (key, value) in
+            return URLQueryItem(name: key, value: String(describing: value))
+        })
 
         // If components url not exist, return default url
         return components.url ?? url

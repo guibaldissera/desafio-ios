@@ -12,7 +12,6 @@ import UIKit
 
 protocol MoviesBusinessLogic {
     func getMovies(request: Movies.GetMovies.Request)
-    func getNextMovies(request: Movies.GetMovies.Request)
 }
 
 // MARK: - Movies DataStore Protocol
@@ -36,33 +35,33 @@ class MoviesInteractor: MoviesDataStore {
 
     // MARK: Other Properties
     private var totalPages: Int = 0
-    private var totalMovies: Int = 0
+    private var loadingPage: Bool = false
 
     // MARK: Private Methods
 
-    private func handleMovies(result: Result<MovieList, NetworkError>, fromCache: Bool) {
+    private func handleMovies(result: Result<MovieList, NetworkError>, reloadedData: Bool) {
         // Create variable of response
         let response: Movies.GetMovies.Response
 
         switch result {
         case let .success(movieList):
+            // TODO: Adjust data when received from cache and reloaded from server
+
             // Update properties
             movies.append(contentsOf: movieList.movies)
             totalPages = movieList.totalPages
-            totalMovies = movieList.totalMovies
-            actualPage = movieList.page
 
             // Create response model
-            response = Movies.GetMovies.Response(movies: movies, fromCache: fromCache)
+            let lastPage = actualPage == totalPages
+            response = Movies.GetMovies.Response(movies: movies, lastPage: lastPage)
 
         case let .failure(error):
-            // Update properties
-            actualPage -= 1
-
             // Create response model
-            response = Movies.GetMovies.Response(movies: [], fromCache: fromCache, error: error)
+            response = Movies.GetMovies.Response(movies: movies, lastPage: false, error: error)
+            actualPage -= 1
         }
 
+        loadingPage.toggle()
         // Call presenter with response
         presenter?.presentMovies(response: response)
     }
@@ -73,18 +72,19 @@ class MoviesInteractor: MoviesDataStore {
 extension MoviesInteractor: MoviesBusinessLogic {
 
     func getMovies(request: Movies.GetMovies.Request) {
+        guard !loadingPage else { return }
+
         // Reset properties
-        actualPage = 1
-        movies = []
+        if request.resetItens {
+            actualPage = 0
+            movies = []
+        }
+
+        // Update actual page
+        actualPage += 1
 
         // Request data
-        worker = MoviesWorker()
-        worker?.getMovies(page: actualPage, completion: handleMovies)
-    }
-
-    func getNextMovies(request: Movies.GetMovies.Request) {
-        // Update properties
-        actualPage += 1
+        loadingPage.toggle()
         worker = MoviesWorker()
         worker?.getMovies(page: actualPage, completion: handleMovies)
     }

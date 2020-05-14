@@ -13,16 +13,19 @@ import UIKit
 enum Movies {
 
     enum GetMovies {
-        struct Request {}
+        struct Request {
+            var resetItens: Bool = false
+        }
 
         struct Response {
             var movies: [Movie]
-            var fromCache: Bool
+            var lastPage: Bool
             var error: NetworkError?
         }
 
         struct ViewModel {
             var movies: [SimpleMovie]
+            var movieFooter: String?
         }
     }
 }

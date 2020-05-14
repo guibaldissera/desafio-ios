@@ -16,3 +16,7 @@
 "Sem favoritos" = "Ops, você não tem favoritos";
 "Erro na lista de filmes" = "Ops, não conseguimos listar os filmes";
 "Sem internet" = "Ops, verifique sua conexão";
+
+// Movie Table Strings
+"Carregando mais filmes" = "Buscando mais filmes...";
+"Idioma da API" = "pt-BR";

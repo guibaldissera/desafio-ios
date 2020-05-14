@@ -44,7 +44,8 @@ class CacheManager {
     /// Validate if actual cache is the same that data in attribute
     /// - Parameter data: data to compare with actual cache
     func isEqual(data: Data) -> Bool {
-        return self.getCache() == data
+        let cached = self.getCache()
+        return cached != nil && cached == data
     }
 
     /// Clean actual cache of this request

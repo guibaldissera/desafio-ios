@@ -35,6 +35,12 @@ class MoviesPresenter {
         }
         return formattedMovies
     }
+
+    private func calculateIndexPathsToReload(from totalCount: Int, newCount: Int) -> [IndexPath] {
+        let startIndex = totalCount - newCount
+        let endIndex = startIndex + newCount
+        return (startIndex..<endIndex).map { IndexPath(row: $0, section: 0) }
+    }
 }
 
 // MARK: - Movies Presenter Extension with PresentationLogic
@@ -52,7 +58,16 @@ extension MoviesPresenter: MoviesPresentationLogic {
                 viewController?.displayError(message: errorMessage)
             }
         } else {
-            let viewModel = Movies.GetMovies.ViewModel(movies: formatMovies(response.movies))
+            let noMoreMoviesTitle = NSLocalizedString(
+                "Sem mais filmes",
+                comment: "No more movies to get")
+            let chargeMoreMoviesTitle = NSLocalizedString(
+                "Carregando mais filmes",
+                comment: "Pagination footer for searching more movies")
+            let footerTitle = response.lastPage ? noMoreMoviesTitle : chargeMoreMoviesTitle
+
+            // Create view model based on calculated itens
+            let viewModel = Movies.GetMovies.ViewModel(movies: formatMovies(response.movies), movieFooter: footerTitle)
             viewController?.displayMovies(viewModel: viewModel)
         }
     }
