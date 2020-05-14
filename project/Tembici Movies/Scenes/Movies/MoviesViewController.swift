@@ -54,8 +54,8 @@ class MoviesViewController: UIViewController {
         self.setupView()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewDidLoad() {
+        super.viewDidLoad()
 
         // Get data from server
         self.getMovieList(resetingItens: true)
@@ -183,6 +183,10 @@ extension MoviesViewController: MovieTableDataSource {
 }
 
 extension MoviesViewController: MovieTableDelegate {
+
+    func movieTable(_ movieTable: UITableView, didSelectMovie indexPath: IndexPath) {
+        router?.routeToMovieDetail()
+    }
 
     func willShowFooter(_ movieTable: UITableView) {
         self.getMovieList()

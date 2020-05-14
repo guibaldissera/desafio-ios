@@ -11,7 +11,8 @@ import UIKit
 // MARK: - MovieDetail DisplayLogic Protocol
 
 protocol MovieDetailDisplayLogic: class {
-    func displaySomething(viewModel: MovieDetail.Something.ViewModel)
+    func displayMovie(viewModel: MovieDetail.GetMovie.ViewModel)
+    func displayCompleteMovie(viewModel: MovieDetail.GetCompleteMovie.ViewModel)
 }
 
 // MARK: - MovieDetail ViewController Class
@@ -23,6 +24,11 @@ class MovieDetailViewController: UIViewController {
     var router: (NSObjectProtocol & MovieDetailRoutingLogic & MovieDetailDataPassing)?
 
     // MARK: View Properties
+    private var posterImageView: UIImageView!
+    private var titleLabel: UILabel!
+    private var genresLabel: UILabel!
+    private var descriptionLabel: UILabel!
+    private var stackView: UIStackView!
 
     // MARK: Other Properties
 
@@ -42,7 +48,12 @@ class MovieDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        doSomething()
+
+        // Setup View
+        setupView()
+
+        // Get data
+        getMovieData()
     }
 
     // MARK: Setup
@@ -60,13 +71,17 @@ class MovieDetailViewController: UIViewController {
         router.dataStore = interactor
     }
 
+    private func setupView() {
+        view.backgroundColor = .systemPink
+    }
+
     // MARK: Routing Methods
 
     // MARK: Interactor Method Calls
 
-    func doSomething() {
-        let request = MovieDetail.Something.Request()
-        interactor?.doSomething(request: request)
+    func getMovieData() {
+        let request = MovieDetail.GetMovie.Request()
+        interactor?.getMovie(request: request)
     }
 }
 
@@ -74,5 +89,7 @@ class MovieDetailViewController: UIViewController {
 
 extension MovieDetailViewController: MovieDetailDisplayLogic {
 
-    func displaySomething(viewModel: MovieDetail.Something.ViewModel) {}
+    func displayMovie(viewModel: MovieDetail.GetMovie.ViewModel) {}
+
+    func displayCompleteMovie(viewModel: MovieDetail.GetCompleteMovie.ViewModel) {}
 }

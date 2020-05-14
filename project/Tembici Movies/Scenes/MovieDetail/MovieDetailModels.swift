@@ -12,7 +12,17 @@ import UIKit
 
 enum MovieDetail {
 
-    enum Something {
+    enum GetMovie {
+        struct Request {}
+        struct Response {
+            var movie: Movie?
+        }
+        struct ViewModel {
+            var movie: SimpleMovie
+        }
+    }
+
+    enum GetCompleteMovie {
         struct Request {}
         struct Response {}
         struct ViewModel {}

@@ -46,11 +46,15 @@ extension MoviesRouter: MoviesRoutingLogic {
 
     // MARK: Navigation
 
-     func navigateToSomewhere(source: MoviesViewController, destination: MovieDetailViewController) {
-         source.show(destination, sender: nil)
+    func navigateToSomewhere(source: MoviesViewController, destination: MovieDetailViewController) {
+        source.show(destination, sender: nil)
      }
 
     // MARK: Passing data
 
-     func passDataToSomewhere(source: MoviesDataStore, destination: inout MovieDetailDataStore) {}
+     func passDataToSomewhere(source: MoviesDataStore, destination: inout MovieDetailDataStore) {
+        if let selectedMovie = viewController?.tableView?.indexPathForSelectedRow?.row {
+            destination.movie = source.movies[selectedMovie]
+        }
+    }
 }

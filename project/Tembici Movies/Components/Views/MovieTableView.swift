@@ -20,6 +20,7 @@ protocol MovieTableDataSource: class {
 
 protocol MovieTableDelegate: class {
     func willShowFooter(_ movieTable: UITableView)
+    func movieTable(_ movieTable: UITableView, didSelectMovie indexPath: IndexPath)
 }
 
 class MovieTableView: UITableView {
@@ -54,7 +55,6 @@ class MovieTableView: UITableView {
 
     private func setupTableView() {
         dataSource = self
-//        prefetchDataSource = self
         delegate = self
         self.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     }
@@ -78,6 +78,9 @@ extension MovieTableView: UITableViewDataSource {
         } else {
             cell = UITableViewCell()
         }
+
+        // Default config
+//        cell.selectionStyle = .none
         return cell
     }
 }
@@ -92,5 +95,9 @@ extension MovieTableView: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         return self.movieDataSource?.footerTitle(self)
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.movieDelegate?.movieTable(self, didSelectMovie: indexPath)
     }
 }

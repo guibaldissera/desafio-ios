@@ -11,7 +11,8 @@ import UIKit
 // MARK: - MovieDetail PresentationLogic Protocol
 
 protocol MovieDetailPresentationLogic {
-    func presentSomething(response: MovieDetail.Something.Response)
+    func presentMovie(response: MovieDetail.GetMovie.Response)
+    func presentCompleteMovie(response: MovieDetail.GetCompleteMovie.Response)
 }
 
 // MARK: - MovieDetail Presenter Class
@@ -26,8 +27,21 @@ class MovieDetailPresenter {
 
 extension MovieDetailPresenter: MovieDetailPresentationLogic {
 
-    func presentSomething(response: MovieDetail.Something.Response) {
-        let viewModel = MovieDetail.Something.ViewModel()
-        viewController?.displaySomething(viewModel: viewModel)
+    func presentMovie(response: MovieDetail.GetMovie.Response) {
+        if let movie = response.movie {
+            let simpleMovie = SimpleMovie(
+                identifier: movie.identfier,
+                image: UIImage(),
+                name: movie.title,
+                favorited: false)
+            let viewModel = MovieDetail.GetMovie.ViewModel(movie: simpleMovie)
+            viewController?.displayMovie(viewModel: viewModel)
+        } else {
+            // Show problem
+        }
+    }
+
+    func presentCompleteMovie(response: MovieDetail.GetCompleteMovie.Response) {
+
     }
 }

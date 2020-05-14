@@ -11,12 +11,14 @@ import UIKit
 // MARK: - MovieDetail BusinessLogic Protocol
 
 protocol MovieDetailBusinessLogic {
-    func doSomething(request: MovieDetail.Something.Request)
+    func getMovie(request: MovieDetail.GetMovie.Request)
 }
 
 // MARK: - MovieDetail DataStore Protocol
 
-protocol MovieDetailDataStore {}
+protocol MovieDetailDataStore {
+    var movie: Movie? { get set }
+}
 
 // MARK: - MovieDetail Interactor Class with DataStore
 
@@ -27,17 +29,15 @@ class MovieDetailInteractor: MovieDetailDataStore {
     var worker: MovieDetailWorker?
 
     // MARK: DataStore Properties
+    var movie: Movie?
 }
 
 // MARK: - MovieDetail Interactor Extension with BusinessLogic
 
 extension MovieDetailInteractor: MovieDetailBusinessLogic {
 
-    func doSomething(request: MovieDetail.Something.Request) {
-        worker = MovieDetailWorker()
-        worker?.doSomeWork()
-
-        let response = MovieDetail.Something.Response()
-        presenter?.presentSomething(response: response)
+    func getMovie(request: MovieDetail.GetMovie.Request) {
+        let response = MovieDetail.GetMovie.Response(movie: movie)
+        presenter?.presentMovie(response: response)
     }
 }
