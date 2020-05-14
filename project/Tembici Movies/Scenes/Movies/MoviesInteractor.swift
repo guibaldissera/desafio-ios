@@ -12,6 +12,7 @@ import UIKit
 
 protocol MoviesBusinessLogic {
     func getMovies(request: Movies.GetMovies.Request)
+    func getNextMovies(request: Movies.GetMovies.Request)
 }
 
 // MARK: - Movies DataStore Protocol
@@ -52,14 +53,14 @@ class MoviesInteractor: MoviesDataStore {
             actualPage = movieList.page
 
             // Create response model
-            response = Movies.GetMovies.Response(newMovies: movieList.movies, fromCache: fromCache)
+            response = Movies.GetMovies.Response(movies: movies, fromCache: fromCache)
 
         case let .failure(error):
             // Update properties
             actualPage -= 1
 
             // Create response model
-            response = Movies.GetMovies.Response(newMovies: [], fromCache: fromCache, error: error)
+            response = Movies.GetMovies.Response(movies: [], fromCache: fromCache, error: error)
         }
 
         // Call presenter with response

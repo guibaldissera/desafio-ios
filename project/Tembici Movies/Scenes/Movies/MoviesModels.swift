@@ -16,7 +16,7 @@ enum Movies {
         struct Request {}
 
         struct Response {
-            var newMovies: [Movie]
+            var movies: [Movie]
             var fromCache: Bool
             var error: NetworkError?
         }

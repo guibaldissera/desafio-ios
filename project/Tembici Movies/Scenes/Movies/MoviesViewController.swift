@@ -29,6 +29,7 @@ class MoviesViewController: UIViewController {
     var tableView: UITableView?
 
     // MARK: Other Properties
+    var movies: [SimpleMovie] = []
 
     // MARK: Object lifecycle
 
@@ -44,11 +45,15 @@ class MoviesViewController: UIViewController {
 
     // MARK: View lifecycle
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func loadView() {
+        super.loadView()
 
         // Setup view with objects
         self.setupView()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
 
         // Get data from server
         self.getMovieList()
@@ -73,6 +78,7 @@ class MoviesViewController: UIViewController {
         // Update view Properties
         view.backgroundColor = .systemBackground
 
+        self.createTableView()
         self.createAlertView(type: .loading)
     }
 
@@ -89,11 +95,8 @@ class MoviesViewController: UIViewController {
     // MARK: Private Methods
 
     private func createAlertView(type: AlertViewType) {
-        // If exist other alert view showed, remove and clean
-        if alertView != nil {
-            alertView?.removeFromSuperview()
-            alertView = nil
-        }
+        // Remove actual view
+        self.removeAlertView()
 
         // Create new and configure alert
         alertView = AlertView(with: type)
@@ -105,13 +108,41 @@ class MoviesViewController: UIViewController {
         // Adjust constraints
         self.constraintsToSuperview(alertView!)
     }
+
+    private func removeAlertView() {
+        if alertView != nil {
+            alertView?.removeFromSuperview()
+            alertView = nil
+        }
+    }
+
+    private func createTableView() {
+        // Create new table view with movies
+        tableView = MovieTableView(movieDataSource: self, movieDelegate: self)
+        tableView!.translatesAutoresizingMaskIntoConstraints = false
+
+        // Add alert to view
+        view.addSubview(tableView!)
+
+        // Adjust constraints
+        self.constraintsToSuperview(tableView!)
+        tableView?.isHidden = true
+    }
 }
 
 // MARK: - Movies ViewController Extension with DisplayLogic
 
 extension MoviesViewController: MoviesDisplayLogic {
 
-    func displayMovies(viewModel: Movies.GetMovies.ViewModel) {}
+    func displayMovies(viewModel: Movies.GetMovies.ViewModel) {
+        // Remove alert view if exist
+        self.removeAlertView()
+        tableView?.isHidden = false
+
+        // Update movies
+        movies = viewModel.movies
+        tableView?.reloadData()
+    }
 
     func displayError(message: String) {
         self.createAlertView(type: .error(message: message))
@@ -119,5 +150,20 @@ extension MoviesViewController: MoviesDisplayLogic {
 
     func displayNoInternet() {
         self.createAlertView(type: .withoutInternet)
+    }
+}
+
+extension MoviesViewController: MovieTableDataSource, MovieTableDelegate {
+
+    func willShowTableEnd(_ movieTable: UITableView) {
+        interactor?.getNextMovies(request: Movies.GetMovies.Request())
+    }
+
+    func numberOfMovies(_ movieTable: MovieTableView) -> Int {
+        return movies.count
+    }
+
+    func movieTable(_ movieTable: UITableView, movieAt indexPath: IndexPath) -> SimpleMovie {
+        return movies[indexPath.row]
     }
 }

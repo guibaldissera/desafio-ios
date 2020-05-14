@@ -52,7 +52,7 @@ extension MoviesPresenter: MoviesPresentationLogic {
                 viewController?.displayError(message: errorMessage)
             }
         } else {
-            let viewModel = Movies.GetMovies.ViewModel(movies: formatMovies(response.newMovies))
+            let viewModel = Movies.GetMovies.ViewModel(movies: formatMovies(response.movies))
             viewController?.displayMovies(viewModel: viewModel)
         }
     }
