@@ -14,6 +14,7 @@ protocol MoviesDisplayLogic: class {
     func displayMovies(viewModel: Movies.GetMovies.ViewModel)
     func displayError(message: String)
     func displayNoInternet()
+    func displayFooterMessage(message: String)
 }
 
 // MARK: - Movies ViewController Class
@@ -30,14 +31,7 @@ class MoviesViewController: UIViewController {
 
     // MARK: Other Properties
     var movies: [SimpleMovie] = []
-    var moviesFooter: String? {
-        didSet {
-            if let containerView = tableView?.footerView(forSection: 0) {
-                containerView.textLabel?.text = self.moviesFooter
-                containerView.sizeToFit()
-            }
-        }
-    }
+    var moviesFooter: String?
 
     // MARK: Object lifecycle
 
@@ -86,8 +80,10 @@ class MoviesViewController: UIViewController {
         // Update view Properties
         view.backgroundColor = .systemBackground
 
-        self.createTableView()
-        self.createAlertView(type: .loading)
+        DispatchQueue.main.async {
+            self.createTableView()
+            self.createAlertView(type: .loading)
+        }
     }
 
     // MARK: Routing Methods
@@ -154,18 +150,19 @@ extension MoviesViewController: MoviesDisplayLogic {
     }
 
     func displayError(message: String) {
-        if movies.isEmpty {
-            self.createAlertView(type: .error(message: message))
-        } else {
-            moviesFooter = NSLocalizedString("Erro na lista de filmes", comment: "Movie list error (Friendly)")
-        }
+        self.createAlertView(type: .error(message: message))
     }
 
     func displayNoInternet() {
-        if movies.isEmpty {
-            self.createAlertView(type: .withoutInternet)
-        } else {
-            moviesFooter = NSLocalizedString("Sem internet", comment: "Without wifi (Friendly)")
+        self.createAlertView(type: .withoutInternet)
+    }
+
+    func displayFooterMessage(message: String) {
+        moviesFooter = message
+
+        if let containerView = tableView?.footerView(forSection: 0) {
+            containerView.textLabel?.text = moviesFooter
+            containerView.sizeToFit()
         }
     }
 }

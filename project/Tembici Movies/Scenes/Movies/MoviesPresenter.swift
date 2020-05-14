@@ -52,10 +52,19 @@ extension MoviesPresenter: MoviesPresentationLogic {
         // Validate response to present on view
         if response.error != nil {
             if case NetworkError.sessionUnavailble = response.error! {
-                viewController?.displayNoInternet()
+                if response.movies.isEmpty {
+                    viewController?.displayNoInternet()
+                } else {
+                    let message = NSLocalizedString("Sem internet", comment: "Without wifi (Friendly)")
+                    viewController?.displayFooterMessage(message: message)
+                }
             } else {
-                let errorMessage = NSLocalizedString("Erro na lista de filmes", comment: "Movie list error (Friendly)")
-                viewController?.displayError(message: errorMessage)
+                let message = NSLocalizedString("Erro na lista de filmes", comment: "Movie list error (Friendly)")
+                if response.movies.isEmpty {
+                    viewController?.displayError(message: message)
+                } else {
+                    viewController?.displayFooterMessage(message: message)
+                }
             }
         } else {
             let noMoreMoviesTitle = NSLocalizedString(
